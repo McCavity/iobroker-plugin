@@ -28,10 +28,13 @@ fault. The order matters — each step rules out a class of cause.
 2. **Online / reachability FIRST.** Read the device's `available` /
    `.info.connection` / `link_quality` state. If it reports offline
    (`available=false`, `connection=false`) → **that is the headline.** Do NOT
-   keep reading value states (they are stale and will mislead), and **skip the
-   battery read** (see step 3 / `battery-check-pattern` — reading a battery
-   state on an offline device triggers a server-side `getState` WARN). Jump to
-   step 5 to check whether it is just this device or the whole adapter.
+   keep reading **value** states (they are stale and will mislead), and **skip
+   the battery read** (see step 3 / `battery-check-pattern` — reading a battery
+   state on an offline device triggers a server-side `getState` WARN). You MAY
+   still read the **last-change timestamp (`lc`) or history of the reachability
+   state itself** to report *when* the device was last seen — that is exactly
+   what step 4 does (on the reachability state, not on the stale value states).
+   Then jump to step 5 to check whether it is just this device or the whole adapter.
 
 3. **Battery (only if battery-powered AND online).** Delegate to
    `battery-check-pattern` — it carries the `available`-guard and the numeric
