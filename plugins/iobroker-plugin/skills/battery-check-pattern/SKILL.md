@@ -17,8 +17,10 @@ used as a sub-step of `diagnose-device`.
 
 ## How to Use
 
-1. **Find the battery states.** Use a segment-anchored pattern
-   (`zigbee.0.*battery`) or list devices and filter. Unsure → `find-state-by-pattern`.
+1. **Find the battery states.** Use a segment-anchored pattern with the dot
+   before the leaf — `zigbee.0.*.battery` or `*.battery` (the glued
+   `zigbee.0.*battery` returns zero, see `find-state-by-pattern`) — or list
+   devices and filter. Unsure → `find-state-by-pattern`.
 
 2. **Check ONLINE / `available` FIRST — skip the read if offline.** For each
    device, read its `available` / `.info.connection` state. If it is offline,

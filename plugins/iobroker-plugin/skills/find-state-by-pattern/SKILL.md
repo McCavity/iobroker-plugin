@@ -17,14 +17,17 @@ ID.
 
 ## How to Use
 
-1. **Use segment-anchored glob patterns.** ioBroker (SimpleAPI) matches the
-   pattern as a **whole-string glob against the full state ID**. Patterns that
-   work: `zigbee.0.*`, `sonoff.*`, `*.POWER`, `zigbee.0.*battery`.
+1. **Use segment-anchored glob patterns — `*` must sit at a `.` boundary.**
+   ioBroker (SimpleAPI) matches the pattern as a **whole-string glob against the
+   full state ID**. Patterns that work: `zigbee.0.*`, `sonoff.*`, `*.POWER`,
+   `*.battery`, `zigbee.0.*.battery` (note the **dot before the leaf segment**).
 
-2. **In-string substring wildcards do NOT work.** `*battery*` returns **zero**
-   matches on the SimpleAPI backend — it is a glob, not a substring search. Use
-   a segment-anchored pattern (`zigbee.0.*battery`) or fetch a broader listing
-   and filter client-side on `common.name`.
+2. **Wildcards glued to a segment name do NOT work.** `*battery*` returns **zero**
+   matches — and so does `zigbee.0.*battery` (no separating dot), because the
+   `*` is glued to `battery` instead of aligning to a segment boundary. Verified
+   live 2026-06-06: `zigbee.0.*battery` → 0 hits, `zigbee.0.*.battery` → 13 hits
+   against the same instance. Use `zigbee.0.*.battery` or `*.battery`, or fetch a
+   broader listing and filter client-side on `common.name`.
 
 3. **Bare strings are auto-globbed.** On McCavity/iobroker-mcp,
    `search_objects("smartcontrol")` is rewritten to `smartcontrol.*` before the

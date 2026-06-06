@@ -30,7 +30,8 @@ is no equivalent on the SimpleAPI-backed MCP (which is purely tool-based):
 ## Semantic differences worth knowing
 
 - **Pattern matching.** SimpleAPI = whole-string segment-anchored **glob**
-  (`zigbee.0.*battery`; `*battery*` returns zero). The official adapter searches
+  (`zigbee.0.*.battery` — dot before the leaf; both `*battery*` and the glued
+  `zigbee.0.*battery` return zero). The official adapter searches
   by **keyword/role/room** and offers structured `list_*` discovery instead.
   See `skills/find-state-by-pattern`.
 - **`script.js.*` / `scenes.0.*` filtering** is a SimpleAPI behaviour — read by
