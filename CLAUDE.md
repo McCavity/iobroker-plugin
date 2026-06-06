@@ -10,8 +10,11 @@ this repository. Humans should read [README.md](README.md) first.
 A Claude-Code + Codex **plugin** (skills bundle) wrapping an ioBroker MCP server.
 Third iteration of the Unit-3 plugin pattern after
 [paperless-bulk-plugin](https://github.com/McCavity/paperless-bulk-plugin) — same
-layout (marketplace-root + `plugins/<name>/` with CC *and* Codex manifest), with
-one twist: **backend-agnostic**.
+plugin layout (`plugins/<name>/` with CC *and* Codex manifest). Distributed via
+the shared `mccavity` marketplace hub
+([claude-marketplace](https://github.com/McCavity/claude-marketplace)) rather than
+a self-hosted marketplace (marketplace names are unique per user — a self-hosted
+`mccavity` would collide with the hub). One twist vs. paperless: **backend-agnostic**.
 
 There is **no server code here.** The plugin contributes three skills and
 references an ioBroker MCP server via `.mcp.json`.

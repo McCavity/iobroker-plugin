@@ -15,12 +15,10 @@ Die vollständige Tool-Entsprechung steht in [`docs/tool-mapping.md`](docs/tool-
 
 ## Repo-Layout
 
-Dieses Repo dient gleichzeitig als **Marketplace** und enthält **ein Plugin**:
+Reines **Plugin-Repo** — distribuiert über den gemeinsamen [mccavity-Marketplace-Hub](https://github.com/McCavity/claude-marketplace), der dieses Plugin via `git-subdir` aus `plugins/iobroker-plugin/` zieht:
 
 ```
-iobroker-plugin/                       # Marketplace-Root
-├── .claude-plugin/
-│   └── marketplace.json               # Marketplace-Catalog
+iobroker-plugin/
 ├── docs/
 │   └── tool-mapping.md                # Backend-A ↔ Backend-B Tool-Mapping
 └── plugins/
@@ -76,21 +74,14 @@ Adapter in ioBroker installieren + Instanz starten:
 
 ## Installation in Claude Code
 
-Lokal (Repo gecloned):
+Über den gemeinsamen `mccavity`-Marketplace-Hub ([claude-marketplace](https://github.com/McCavity/claude-marketplace)):
 
 ```text
-/plugin marketplace add ~/git/projects/own/iobroker-plugin
+/plugin marketplace add McCavity/claude-marketplace
 /plugin install iobroker-plugin@mccavity
 ```
 
-Direkt vom GitHub:
-
-```text
-/plugin marketplace add McCavity/iobroker-plugin
-/plugin install iobroker-plugin@mccavity
-```
-
-Marketplace-Name ist `mccavity` (gemäß `.claude-plugin/marketplace.json`).
+> Dieses Repo hostet **keinen** eigenen Marketplace mehr — Marketplace-Namen sind pro Nutzer eindeutig, ein self-hosted `mccavity` würde den Hub verdrängen. Füge nur den Hub hinzu, nicht dieses Repo direkt.
 
 ## Installation in Codex
 
