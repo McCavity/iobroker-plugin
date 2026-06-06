@@ -66,7 +66,7 @@ Pattern `zigbee.0.*` → 142 States. Gefiltert auf common.name ~ "Couch":
 - zigbee.0.00158d0001abcd.brightness
 - zigbee.0.00158d0001abcd.available
 
-Zum Schalten: write_state("zigbee.0.00158d0001abcd.state", true).
+Zum Schalten: die `state`-ID setzen (`write_state` bzw. `set_state`, je nach Backend).
 ```
 
 ## Anti-Patterns

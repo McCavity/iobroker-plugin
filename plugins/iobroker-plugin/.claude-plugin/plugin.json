@@ -1,6 +1,6 @@
 {
   "name": "iobroker-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Diagnose + state-finding + battery-check Skills for ioBroker, backend-agnostic over an ioBroker MCP server",
   "author": {
     "name": "Henning Halfpap"

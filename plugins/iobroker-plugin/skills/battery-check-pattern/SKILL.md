@@ -30,6 +30,11 @@ used as a sub-step of `diagnose-device`.
    defensively — the WARN fires at the adapter read, not at your comparison.
    Skipping the read avoids both the WARN-spam and a stale/misleading value.
    Put offline devices in a separate **"offline (übersprungen)"** bucket.
+   **If a device has no reachability state at all** (common for non-Zigbee
+   devices, or when the official adapter structures discovery differently),
+   treat reachability as *unknown* — do NOT assume online. Bucket it as
+   **"unbekannt (kein Reachability-State)"** and skip the battery read too,
+   consistent with the WARN-avoidance posture.
 
 3. **Validate numeric before comparing.** Only compare if the value is actually
    a number (`typeof val === "number"`). The trap (Eintracht-Logo, 2026-05-27):
