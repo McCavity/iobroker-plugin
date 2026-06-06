@@ -43,11 +43,13 @@ Die Skills sind in den Lerneinträgen aus Hennings KI-OS verwurzelt (Glob-Patter
 
 ## MCP-Voraussetzung
 
-Das Plugin enthält **keinen Server-Code** — es referenziert einen ioBroker-MCP-Server. Wähle dein Backend:
+Das Plugin enthält **keinen Server-Code** und registriert standardmäßig **keinen** MCP-Server — es ist **skills-only** und nutzt die ioBroker-MCP, die du **bereits registriert** hast (z.B. ein user-scope `iobroker`-Eintrag in `~/.claude.json`). So kann die Installation nie doppelt registrieren oder an unset Env-Vars scheitern.
 
-### Backend A — McCavity/iobroker-mcp (Standard, stdio)
+Noch keine ioBroker-MCP registriert? Wähle ein Backend und kopiere eines der Templates aus [`.mcp.json`](plugins/iobroker-plugin/.mcp.json) in einen Top-Level-`mcpServers`-Block (entweder die Plugin-`.mcp.json` ODER dein user-scope `~/.claude.json`):
 
-Der Server wird path-launched (venv-Python + `server.py`), Credentials kommen aus einer `.env` neben `server.py`:
+### Backend A — McCavity/iobroker-mcp (stdio)
+
+Path-launched (venv-Python + `server.py`), Credentials aus einer `.env` neben `server.py`:
 
 ```bash
 git clone git@github.com:McCavity/iobroker-mcp.git
@@ -56,18 +58,15 @@ pip install -r requirements.txt
 cp .env.example .env   # IOBROKER_URL (+ optional IOBROKER_USER/PASS) setzen
 ```
 
-Dann in `plugins/iobroker-plugin/.mcp.json` die beiden Pfad-Platzhalter setzen:
-
-```bash
-export IOBROKER_MCP_PYTHON="/abs/pfad/iobroker-mcp/.venv/bin/python"
-export IOBROKER_MCP_SERVER="/abs/pfad/iobroker-mcp/server.py"
+```json
+{ "mcpServers": { "iobroker": { "type": "stdio",
+  "command": "/abs/pfad/iobroker-mcp/.venv/bin/python",
+  "args": ["/abs/pfad/iobroker-mcp/server.py"], "env": {} } } }
 ```
-
-> **Wenn `iobroker` bereits user-scope registriert ist** (z.B. in `~/.claude.json`) — wie in Hennings Setup — **entferne den `mcpServers`-Block aus der Plugin-`.mcp.json`**, sonst doppelt registriert. Das Plugin reicht dann nur die Skills nach.
 
 ### Backend B — offizieller ioBroker.mcp-Adapter (HTTP/SSE)
 
-Adapter in ioBroker installieren + Instanz starten, dann in der Plugin-`.mcp.json` den `mcpServers`-Block durch einen HTTP-Transport ersetzen:
+Adapter in ioBroker installieren + Instanz starten:
 
 ```json
 { "mcpServers": { "iobroker": { "type": "http", "url": "http://<host>:<port>/mcp" } } }

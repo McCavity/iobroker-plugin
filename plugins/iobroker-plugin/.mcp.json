@@ -1,15 +1,19 @@
 {
-  "_comment": "Backend reference for the iobroker-plugin skills. Two supported backends — uncomment the one you run. Skills are written backend-agnostically (see docs/tool-mapping.md); they describe the goal and name tools from BOTH backends as examples.",
+  "_README": "Skills-only by default: this plugin contributes the three skills and uses whichever ioBroker MCP server you ALREADY have registered (e.g. a user-scope `iobroker` entry in ~/.claude.json). There is intentionally no active `mcpServers` block here, so installing the plugin never double-registers or breaks. To bundle a backend WITH the plugin instead, copy one of the templates below up into a top-level \"mcpServers\" key. See README for details. Skills are written backend-agnostically — full tool mapping in docs/tool-mapping.md.",
 
-  "_comment_backend_a": "Backend A — McCavity/iobroker-mcp (FastMCP wrapper around the SimpleAPI adapter, stdio). Path-launched via a venv python + server.py; credentials live in a .env next to server.py. Set IOBROKER_MCP_PYTHON + IOBROKER_MCP_SERVER to absolute paths.",
-  "mcpServers": {
+  "_template_backend_a_McCavity_iobroker_mcp_stdio": {
     "iobroker": {
       "type": "stdio",
-      "command": "${IOBROKER_MCP_PYTHON}",
-      "args": ["${IOBROKER_MCP_SERVER}"],
+      "command": "/ABS/PATH/iobroker-mcp/.venv/bin/python",
+      "args": ["/ABS/PATH/iobroker-mcp/server.py"],
       "env": {}
     }
   },
 
-  "_comment_backend_b": "Backend B — official ioBroker/ioBroker.mcp adapter (GermanBluefox, Streamable HTTP/SSE at /mcp). Replace the mcpServers block above with an HTTP transport pointing at your adapter, e.g.: { \"iobroker\": { \"type\": \"http\", \"url\": \"http://<host>:<port>/mcp\" } }. As of 2026-06 this adapter is experimental (v0.1.4, not yet on npm) — track before migrating."
+  "_template_backend_b_official_ioBroker_mcp_http": {
+    "iobroker": {
+      "type": "http",
+      "url": "http://<host>:<port>/mcp"
+    }
+  }
 }

@@ -49,13 +49,17 @@ The three skills encode hard-won ioBroker lessons from Henning's KI-OS learning 
 If you change ioBroker behaviour assumptions, re-ground them against the KI-OS
 learning log rather than guessing.
 
-## .mcp.json caveat
+## .mcp.json — skills-only by default
 
-The shipped `.mcp.json` is a **template**. Backend A uses path placeholders
-(`${IOBROKER_MCP_PYTHON}` / `${IOBROKER_MCP_SERVER}`) because iobroker-mcp is not
-a pip module (unlike paperless-bulk-mcp). If `iobroker` is already registered
-user-scope (Henning's machine: `~/.claude.json`), the `mcpServers` block must be
-removed to avoid a double registration — the plugin then only contributes skills.
+The shipped `.mcp.json` has **no active `mcpServers` block** on purpose. The
+plugin contributes only the three skills and relies on whichever ioBroker MCP is
+already registered (Henning: a user-scope `iobroker` in `~/.claude.json`). This
+avoids both the double-registration name clash and the broken-launch footgun:
+iobroker-mcp is **path-launched**, not a pip module like paperless-bulk-mcp, so
+it cannot carry portable `${ENV}` placeholders for its `command` the way
+paperless does — shipping an active block with a placeholder command would break
+on install. To bundle a backend with the plugin, copy one of the two templates
+in `.mcp.json` into a top-level `mcpServers` key — see README.
 
 ## Conventions
 
