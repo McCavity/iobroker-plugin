@@ -1,0 +1,10 @@
+{
+  "name": "iobroker-plugin",
+  "version": "1.0.0",
+  "description": "Diagnose + state-finding + battery-check Skills for ioBroker, backend-agnostic over an ioBroker MCP server",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ioBroker"
+  }
+}

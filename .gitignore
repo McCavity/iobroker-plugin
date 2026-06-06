@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Worktrees / Claude Code
+.worktrees/
+.claude/worktrees/
+
+# Local
+*.local.json
+.env
+.env.local
